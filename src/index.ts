@@ -76,15 +76,15 @@ async function main() {
     switch (name) {
       case "wealthbox.getMe": {
         const data = await client.getMe();
-        return { content: [{ type: "json", json: data }] };
+        return { content: [], structuredContent: data };
       }
       case "wealthbox.listUsers": {
         const data = await client.listUsers();
-        return { content: [{ type: "json", json: data }] };
+        return { content: [], structuredContent: data };
       }
       case "wealthbox.listTeams": {
         const data = await client.listTeams();
-        return { content: [{ type: "json", json: data }] };
+        return { content: [], structuredContent: data };
       }
       case "wealthbox.request": {
         const { method, path, body, query } = (args || {}) as {
@@ -97,7 +97,7 @@ async function main() {
           throw new Error("wealthbox.request requires method and path");
         }
         const data = await client.request(method, path, body, query);
-        return { content: [{ type: "json", json: data }] };
+        return { content: [], structuredContent: data };
       }
       default:
         throw new Error(`Unknown tool: ${name}`);
