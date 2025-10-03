@@ -3,10 +3,12 @@ import { AppConfig } from "./config.js";
 export class WealthboxClient {
   private readonly baseUrl: string;
   private readonly token: string;
+  private readonly timeoutMs: number;
 
   constructor(config: AppConfig) {
     this.baseUrl = config.WEALTHBOX_API_BASE_URL.replace(/\/$/, "");
     this.token = config.WEALTHBOX_TOKEN;
+    this.timeoutMs = 15000;
   }
 
   private buildHeaders(extra?: Record<string, string>): Record<string, string> {
@@ -26,11 +28,14 @@ export class WealthboxClient {
       });
     }
 
+    const abort = new AbortController();
+    const timeout = setTimeout(() => abort.abort(), this.timeoutMs);
     const res = await fetch(url.toString(), {
       method,
       headers: this.buildHeaders(),
       body: body === undefined ? undefined : JSON.stringify(body),
-    });
+      signal: abort.signal,
+    }).finally(() => clearTimeout(timeout));
 
     if (!res.ok) {
       const text = await res.text().catch(() => "");

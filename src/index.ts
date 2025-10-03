@@ -24,6 +24,11 @@ async function main() {
 
   const tools = [
     {
+      name: "wealthbox.health",
+      description: "Health check that hits /v1/me to verify token and connectivity",
+      inputSchema: { type: "object", properties: {} },
+    },
+    {
       name: "wealthbox.getMe",
       description: "Retrieve login profile information for the authenticated user",
       inputSchema: {
@@ -74,17 +79,24 @@ async function main() {
   server.setRequestHandler(CallToolRequestSchema, async (req: any) => {
     const { name, arguments: args } = req.params;
     switch (name) {
+      case "wealthbox.health": {
+        const data = await client.getMe();
+        return {
+          content: [{ type: "text", text: "ok" }],
+          structuredContent: { ok: true, me: data },
+        };
+      }
       case "wealthbox.getMe": {
         const data = await client.getMe();
-        return { content: [], structuredContent: data };
+        return { content: [{ type: "text", text: "me" }], structuredContent: data };
       }
       case "wealthbox.listUsers": {
         const data = await client.listUsers();
-        return { content: [], structuredContent: data };
+        return { content: [{ type: "text", text: "users" }], structuredContent: data };
       }
       case "wealthbox.listTeams": {
         const data = await client.listTeams();
-        return { content: [], structuredContent: data };
+        return { content: [{ type: "text", text: "teams" }], structuredContent: data };
       }
       case "wealthbox.request": {
         const { method, path, body, query } = (args || {}) as {
@@ -97,7 +109,7 @@ async function main() {
           throw new Error("wealthbox.request requires method and path");
         }
         const data = await client.request(method, path, body, query);
-        return { content: [], structuredContent: data };
+        return { content: [{ type: "text", text: `${method} ${path}` }], structuredContent: data };
       }
       default:
         throw new Error(`Unknown tool: ${name}`);
