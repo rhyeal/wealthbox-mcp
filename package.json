@@ -1,7 +1,7 @@
 {
   "name": "wealthbox-mcp",
   "version": "0.1.0",
-  "private": true,
+  
   "type": "module",
   "description": "Model Context Protocol server for Wealthbox API",
   "main": "dist/index.js",
@@ -28,6 +28,7 @@
     "model-context-protocol"
   ],
   "license": "MIT",
+  "publishConfig": { "access": "public" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/your-org/wealthbox-mcp.git"
