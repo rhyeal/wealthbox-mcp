@@ -9,7 +9,7 @@ export class WealthboxClient {
     this.token = config.WEALTHBOX_TOKEN;
   }
 
-  private buildHeaders(extra?: HeadersInit): HeadersInit {
+  private buildHeaders(extra?: Record<string, string>): Record<string, string> {
     return {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -41,8 +41,7 @@ export class WealthboxClient {
     if (contentType.includes("application/json")) {
       return (await res.json()) as T;
     }
-    // @ts-expect-error: non-JSON responses rarely used
-    return (await res.text()) as T;
+    return (await res.text()) as unknown as T;
   }
 
   // Minimal helpers for common endpoints from docs

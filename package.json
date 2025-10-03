@@ -5,6 +5,13 @@
   "type": "module",
   "description": "Model Context Protocol server for Wealthbox API",
   "main": "dist/index.js",
+  "bin": {
+    "wealthbox-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
@@ -14,8 +21,19 @@
   "engines": {
     "node": ">=18"
   },
+  "keywords": [
+    "mcp",
+    "wealthbox",
+    "crm",
+    "model-context-protocol"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/wealthbox-mcp.git"
+  },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.2.0",
+    "@modelcontextprotocol/sdk": "^1.19.1",
     "dotenv": "^16.4.5",
     "zod": "^3.23.8"
   },

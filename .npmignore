@@ -1,0 +1,11 @@
+src/
+node_modules/
+.DS_Store
+*.log
+.env
+wealthbox_key.txt
+tsconfig.json
+README.md
+.git/
+.gitignore
+
