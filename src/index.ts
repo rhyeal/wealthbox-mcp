@@ -49,8 +49,8 @@ async function main() {
     // Notes
     { name: "wealthbox.notes.list", description: "List notes", inputSchema: { type: "object", properties: { query: { type: "object", additionalProperties: true } } } },
     { name: "wealthbox.notes.get", description: "Get note by id", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
-    { name: "wealthbox.notes.create", description: "Create note", inputSchema: { type: "object", properties: { body: { type: "object", additionalProperties: true } }, required: ["body"] } },
-    { name: "wealthbox.notes.update", description: "Update note", inputSchema: { type: "object", properties: { id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["id", "body"] } },
+    { name: "wealthbox.notes.create", description: "Create note. Example: {\"content\": \"Note text\", \"linked_to\": [{\"id\": 12345, \"type\": \"Contact\"}]}", inputSchema: { type: "object", properties: { content: { type: "string", description: "Note text (required if no body provided)" }, linked_to: { type: "array", items: { type: "object", properties: { id: { type: "number" }, type: { type: "string", description: "e.g. 'Contact', 'Project'" } }, required: ["id", "type"] } }, body: { type: "object", additionalProperties: true, description: "Raw API body. If provided, overrides content/linked_to." } } } },
+    { name: "wealthbox.notes.update", description: "Update note content by id. You can pass {content} directly, or a raw body.", inputSchema: { type: "object", properties: { id: { type: "number" }, content: { type: "string" }, body: { type: "object", additionalProperties: true } }, required: ["id"] } },
     // Opportunities
     { name: "wealthbox.opportunities.list", description: "List opportunities", inputSchema: { type: "object", properties: { query: { type: "object", additionalProperties: true } } } },
     { name: "wealthbox.opportunities.get", description: "Get opportunity by id", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
@@ -285,13 +285,15 @@ async function main() {
         return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }], structuredContent: data };
       }
       case "wealthbox.notes.create": {
-        const { body } = args as { body: unknown };
-        const data = await client.request("POST", "/v1/notes", body);
+        const { content, linked_to, body } = (args || {}) as { content?: string; linked_to?: Array<{ id: number; type: string }>; body?: unknown };
+        const payload = body ?? { content, linked_to };
+        const data = await client.request("POST", "/v1/notes", payload);
         return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }], structuredContent: data };
       }
       case "wealthbox.notes.update": {
-        const { id, body } = args as { id: number; body: unknown };
-        const data = await client.request("PUT", `/v1/notes/${id}`, body);
+        const { id, content, body } = (args || {}) as { id: number; content?: string; body?: unknown };
+        const payload = body ?? (content !== undefined ? { content } : {});
+        const data = await client.request("PUT", `/v1/notes/${id}`, payload);
         return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }], structuredContent: data };
       }
       // Opportunities
