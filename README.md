@@ -142,6 +142,27 @@ Core tools map to Wealthbox REST endpoints. Many create/update tools accept expl
 
 ### Parameter Hints (selected)
 
+Contacts list (query)
+
+```json
+{
+  "query": {
+    "name": "string",
+    "email": "string",
+    "phone": "string",
+    "contact_type": "string",
+    "id": 123,
+    "active": true,
+    "tags": ["VIP", "Newsletter"],
+    "type": "person",
+    "page": 1,
+    "per_page": 5
+  }
+}
+```
+
+Example: `{ "query": { "name": "John Smith", "per_page": 10 } }`
+
 Notes
 
 ```json
