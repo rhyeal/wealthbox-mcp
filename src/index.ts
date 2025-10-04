@@ -31,20 +31,20 @@ async function main() {
     // Contacts
     { name: "wealthbox.contacts.list", description: "List contacts", inputSchema: { type: "object", properties: { query: { type: "object", additionalProperties: true } } } },
     { name: "wealthbox.contacts.get", description: "Get contact by id", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
-    { name: "wealthbox.contacts.create", description: "Create contact", inputSchema: { type: "object", properties: { body: { type: "object", additionalProperties: true } }, required: ["body"] } },
-    { name: "wealthbox.contacts.update", description: "Update contact", inputSchema: { type: "object", properties: { id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["id", "body"] } },
+    { name: "wealthbox.contacts.create", description: "Create contact. Example: {\"first_name\":\"Ada\",\"last_name\":\"Lovelace\"}. You can also provide a raw body.", inputSchema: { type: "object", properties: { first_name: { type: "string" }, last_name: { type: "string" }, type: { type: "string", description: "e.g. 'Person' or 'Company'" }, emails: { type: "array", items: { type: "object", properties: { address: { type: "string" }, type: { type: "string" } } } }, phones: { type: "array", items: { type: "object", properties: { number: { type: "string" }, type: { type: "string" } } } }, addresses: { type: "array", items: { type: "object", properties: { street: { type: "string" }, city: { type: "string" }, state: { type: "string" }, postal_code: { type: "string" }, country: { type: "string" } } } }, tags: { type: "array", items: { type: "string" } }, body: { type: "object", additionalProperties: true, description: "Raw API body. If provided, overrides field params." } } } },
+    { name: "wealthbox.contacts.update", description: "Update contact. Provide id and changed fields. You can also pass raw body.", inputSchema: { type: "object", properties: { id: { type: "number" }, first_name: { type: "string" }, last_name: { type: "string" }, type: { type: "string" }, emails: { type: "array", items: { type: "object", properties: { address: { type: "string" }, type: { type: "string" } } } }, phones: { type: "array", items: { type: "object", properties: { number: { type: "string" }, type: { type: "string" } } } }, addresses: { type: "array", items: { type: "object", properties: { street: { type: "string" }, city: { type: "string" }, state: { type: "string" }, postal_code: { type: "string" }, country: { type: "string" } } } }, tags: { type: "array", items: { type: "string" } }, body: { type: "object", additionalProperties: true } }, required: ["id"] } },
     { name: "wealthbox.contacts.delete", description: "Delete contact", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
     // Tasks
     { name: "wealthbox.tasks.list", description: "List tasks", inputSchema: { type: "object", properties: { query: { type: "object", additionalProperties: true } } } },
     { name: "wealthbox.tasks.get", description: "Get task by id", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
-    { name: "wealthbox.tasks.create", description: "Create task", inputSchema: { type: "object", properties: { body: { type: "object", additionalProperties: true } }, required: ["body"] } },
-    { name: "wealthbox.tasks.update", description: "Update task", inputSchema: { type: "object", properties: { id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["id", "body"] } },
+    { name: "wealthbox.tasks.create", description: "Create task. Example: {\"title\":\"Call client\",\"due_date\":\"2025-10-04\"}. You can also provide a raw body.", inputSchema: { type: "object", properties: { title: { type: "string" }, description: { type: "string" }, due_date: { type: "string", description: "e.g. '2025-10-04'" }, assigned_to_user_id: { type: "number" }, assigned_to_team_id: { type: "number" }, category_id: { type: "number" }, body: { type: "object", additionalProperties: true } } } },
+    { name: "wealthbox.tasks.update", description: "Update task by id. You can also pass raw body.", inputSchema: { type: "object", properties: { id: { type: "number" }, title: { type: "string" }, description: { type: "string" }, due_date: { type: "string" }, assigned_to_user_id: { type: "number" }, assigned_to_team_id: { type: "number" }, category_id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["id"] } },
     { name: "wealthbox.tasks.delete", description: "Delete task", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
     // Events
     { name: "wealthbox.events.list", description: "List events", inputSchema: { type: "object", properties: { query: { type: "object", additionalProperties: true } } } },
     { name: "wealthbox.events.get", description: "Get event by id", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
-    { name: "wealthbox.events.create", description: "Create event", inputSchema: { type: "object", properties: { body: { type: "object", additionalProperties: true } }, required: ["body"] } },
-    { name: "wealthbox.events.update", description: "Update event", inputSchema: { type: "object", properties: { id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["id", "body"] } },
+    { name: "wealthbox.events.create", description: "Create event. Example: {\"title\":\"Review\",\"starts_at\":\"2025-10-04 10:00\",\"ends_at\":\"2025-10-04 11:00\"}", inputSchema: { type: "object", properties: { title: { type: "string" }, description: { type: "string" }, starts_at: { type: "string" }, ends_at: { type: "string" }, location: { type: "string" }, category_id: { type: "number" }, body: { type: "object", additionalProperties: true } } } },
+    { name: "wealthbox.events.update", description: "Update event by id. You can also pass raw body.", inputSchema: { type: "object", properties: { id: { type: "number" }, title: { type: "string" }, description: { type: "string" }, starts_at: { type: "string" }, ends_at: { type: "string" }, location: { type: "string" }, category_id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["id"] } },
     { name: "wealthbox.events.delete", description: "Delete event", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
     // Notes
     { name: "wealthbox.notes.list", description: "List notes", inputSchema: { type: "object", properties: { query: { type: "object", additionalProperties: true } } } },
@@ -54,21 +54,21 @@ async function main() {
     // Opportunities
     { name: "wealthbox.opportunities.list", description: "List opportunities", inputSchema: { type: "object", properties: { query: { type: "object", additionalProperties: true } } } },
     { name: "wealthbox.opportunities.get", description: "Get opportunity by id", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
-    { name: "wealthbox.opportunities.create", description: "Create opportunity", inputSchema: { type: "object", properties: { body: { type: "object", additionalProperties: true } }, required: ["body"] } },
-    { name: "wealthbox.opportunities.update", description: "Update opportunity", inputSchema: { type: "object", properties: { id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["id", "body"] } },
+    { name: "wealthbox.opportunities.create", description: "Create opportunity. Example: {\"name\":\"New deal\",\"pipeline_id\":1,\"stage_id\":2,\"amount\":10000}", inputSchema: { type: "object", properties: { name: { type: "string" }, description: { type: "string" }, pipeline_id: { type: "number" }, stage_id: { type: "number" }, amount: { type: "number" }, close_date: { type: "string" }, primary_contact_id: { type: "number" }, body: { type: "object", additionalProperties: true } } } },
+    { name: "wealthbox.opportunities.update", description: "Update opportunity by id. You can also pass raw body.", inputSchema: { type: "object", properties: { id: { type: "number" }, name: { type: "string" }, description: { type: "string" }, pipeline_id: { type: "number" }, stage_id: { type: "number" }, amount: { type: "number" }, close_date: { type: "string" }, primary_contact_id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["id"] } },
     { name: "wealthbox.opportunities.delete", description: "Delete opportunity", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
     // Projects
     { name: "wealthbox.projects.list", description: "List projects", inputSchema: { type: "object", properties: { query: { type: "object", additionalProperties: true } } } },
     { name: "wealthbox.projects.get", description: "Get project by id", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
-    { name: "wealthbox.projects.create", description: "Create project", inputSchema: { type: "object", properties: { body: { type: "object", additionalProperties: true } }, required: ["body"] } },
-    { name: "wealthbox.projects.update", description: "Update project", inputSchema: { type: "object", properties: { id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["id", "body"] } },
+    { name: "wealthbox.projects.create", description: "Create project. Example: {\"name\":\"Onboarding\",\"description\":\"...\"}", inputSchema: { type: "object", properties: { name: { type: "string" }, description: { type: "string" }, due_date: { type: "string" }, status: { type: "string" }, body: { type: "object", additionalProperties: true } } } },
+    { name: "wealthbox.projects.update", description: "Update project by id. You can also pass raw body.", inputSchema: { type: "object", properties: { id: { type: "number" }, name: { type: "string" }, description: { type: "string" }, due_date: { type: "string" }, status: { type: "string" }, body: { type: "object", additionalProperties: true } }, required: ["id"] } },
     { name: "wealthbox.projects.delete", description: "Delete project", inputSchema: { type: "object", properties: { id: { type: "number" } }, required: ["id"] } },
     // Comments
     { name: "wealthbox.comments.list", description: "List comments (optionally by resource)", inputSchema: { type: "object", properties: { resource_id: { type: "number" }, resource_type: { type: "string" }, updated_since: { type: "string" }, updated_before: { type: "string" } } } },
     // Metadata
     { name: "wealthbox.userGroups.list", description: "List user groups", inputSchema: { type: "object", properties: {} } },
-    { name: "wealthbox.categories.list", description: "List members of a customizable category", inputSchema: { type: "object", properties: { type: { type: "string" } }, required: ["type"] } },
-    { name: "wealthbox.tags.list", description: "List tags (optionally by document_type)", inputSchema: { type: "object", properties: { document_type: { type: "string" } } } },
+    { name: "wealthbox.categories.list", description: "List members of a customizable category", inputSchema: { type: "object", properties: { type: { type: "string", enum: ["tags","custom_fields","opportunity_stages","opportunity_pipelines","contact_types","contact_sources","task_categories","event_categories","file_categories","investment_objectives","financial_account_types","email_types","phone_types","address_types","website_types","contact_roles"] } }, required: ["type"] } },
+    { name: "wealthbox.tags.list", description: "List tags (optionally by document_type)", inputSchema: { type: "object", properties: { document_type: { type: "string", enum: ["Contact", "Note"] } } } },
     { name: "wealthbox.customFields.list", description: "List custom fields", inputSchema: { type: "object", properties: {} } },
     { name: "wealthbox.contactRoles.list", description: "List contact roles", inputSchema: { type: "object", properties: {} } },
     // Workflows
@@ -83,7 +83,7 @@ async function main() {
     // Activity Stream
     { name: "wealthbox.activityStream.list", description: "Retrieve activity stream", inputSchema: { type: "object", properties: { query: { type: "object", additionalProperties: true } } } },
     // Households
-    { name: "wealthbox.households.addMember", description: "Add member to a household", inputSchema: { type: "object", properties: { household_id: { type: "number" }, body: { type: "object", additionalProperties: true } }, required: ["household_id", "body"] } },
+    { name: "wealthbox.households.addMember", description: "Add member to a household. Provide household_id and either id+title or raw body.", inputSchema: { type: "object", properties: { household_id: { type: "number" }, id: { type: "number" }, title: { type: "string", enum: ["Head","Spouse","Partner","Child","Grandchild","Parent","Grandparent","Sibling","Other Dependent"] }, body: { type: "object", additionalProperties: true } }, required: ["household_id"] } },
     { name: "wealthbox.households.deleteMember", description: "Delete member from a household", inputSchema: { type: "object", properties: { household_id: { type: "number" }, id: { type: "number" } }, required: ["household_id", "id"] } },
     {
       name: "wealthbox.getMe",
@@ -430,8 +430,9 @@ async function main() {
       }
       // Households
       case "wealthbox.households.addMember": {
-        const { household_id, body } = args as { household_id: number; body: unknown };
-        const data = await client.request("POST", `/v1/households/${household_id}/members`, body);
+        const { household_id, id, title, body } = (args || {}) as { household_id: number; id?: number; title?: string; body?: unknown };
+        const payload = body ?? { id, title };
+        const data = await client.request("POST", `/v1/households/${household_id}/members`, payload);
         return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }], structuredContent: data };
       }
       case "wealthbox.households.deleteMember": {
