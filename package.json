@@ -32,8 +32,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-org/wealthbox-mcp.git"
+    "url": "git+https://github.com/rhyeal/wealthbox-mcp.git"
   },
+  "homepage": "https://github.com/rhyeal/wealthbox-mcp",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.19.1",
     "dotenv": "^16.4.5",
